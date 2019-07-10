@@ -16,12 +16,30 @@ public class TraderServiceImpl implements TraderService {
 
 	@Override
 	public List<TraderVO> findAll() {
-
 		String sql = "SELECT * FROM STOCK_QUOTES";
-
-		List<TraderVO> cities = jtm.query(sql, new BeanPropertyRowMapper(TraderVO.class));
-
-		return cities;
+		List<TraderVO> all = jtm.query(sql, new BeanPropertyRowMapper(TraderVO.class));
+		return all;
 	}
 
+	@Override
+	public List<TraderVO> findByTicker(String tickerSymbol) {
+		String sql = "SELECT * FROM STOCK_QUOTES WHERE STOCK_SYMBOL=" + "'" + tickerSymbol + "'";
+		List<TraderVO> ticker = jtm.query(sql, new BeanPropertyRowMapper(TraderVO.class));
+		return ticker;
+	}
+
+	@Override
+	public List<TraderVO> findByMarketDt(String marketDate) {
+		String sql = "SELECT * FROM STOCK_QUOTES WHERE MARKET_DATE=" + "'" + marketDate + "'";
+		List<TraderVO> date = jtm.query(sql, new BeanPropertyRowMapper(TraderVO.class));
+		return date;
+	}
+
+	@Override
+	public List<TraderVO> findByBoth(String tickerSymbol, String marketDate) {
+		String sql = "SELECT * FROM STOCK_QUOTES WHERE STOCK_SYMBOL=" + "'" + tickerSymbol + "'" + " AND MARKET_DATE="
+				+ "'" + marketDate + "'";
+		List<TraderVO> both = jtm.query(sql, new BeanPropertyRowMapper(TraderVO.class));
+		return both;
+	}
 }
