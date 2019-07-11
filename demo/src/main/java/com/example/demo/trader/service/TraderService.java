@@ -18,5 +18,5 @@ public interface TraderService {
 	public ResponseEntity<?> postTickerAndMarketDt(String tickerSymbol, String marketDate, float open,
 			float high, float low, float close, int volume);
 	
-	public void deleteTickerAndMarketDt(String tickerSymbol, String marketDate);
+	public ResponseEntity<?> deleteTickerAndMarketDt(String tickerSymbol, String marketDate);
 }

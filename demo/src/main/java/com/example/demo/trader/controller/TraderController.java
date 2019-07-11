@@ -52,8 +52,8 @@ public class TraderController {
 	// Put-Patch Request
 	
 	@DeleteMapping("/trader/stockquotes")
-	public void deleteTickerAndMarketDate(@RequestBody TraderVO traderVO) {
-		traderService.deleteTickerAndMarketDt(traderVO.getStock_symbol().toUpperCase(), traderVO.getMarket_date());
+	public ResponseEntity<?> deleteTickerAndMarketDate(@RequestBody TraderVO traderVO) {
+		return traderService.deleteTickerAndMarketDt(traderVO.getStock_symbol().toUpperCase(), traderVO.getMarket_date());
 	}
 
 }

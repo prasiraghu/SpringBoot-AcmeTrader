@@ -68,9 +68,15 @@ public class TraderServiceImpl implements TraderService {
 	}
 
 	@Override
-	public void deleteTickerAndMarketDt(String tickerSymbol, String marketDate) {
+	public ResponseEntity<?> deleteTickerAndMarketDt(String tickerSymbol, String marketDate) {
 		// TODO Auto-generated method stub
-		jtm.update("DELETE FROM STOCK_QUOTES WHERE STOCK_SYMBOL = ? AND MARKET_DATE = ?", tickerSymbol, marketDate);
+		int result = jtm.update("DELETE FROM STOCK_QUOTES WHERE STOCK_SYMBOL = ? AND MARKET_DATE = ?", tickerSymbol, marketDate);
+		System.out.println(result);
+		if (result == 1) {
+			return new ResponseEntity<>(null, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	
