@@ -3,7 +3,11 @@ package com.example.demo.trader.service;
 import java.util.List;
 
 import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -45,15 +49,22 @@ public class TraderServiceImpl implements TraderService {
 	}
 
 	@Override
-	public boolean postTickerAndMarketDt(String tickerSymbol, String marketDate, float open, float high, float low,
+	public ResponseEntity<?> postTickerAndMarketDt(String tickerSymbol, String marketDate, float open, float high, float low,
 			float close, int volume) {
-		//TODO - check that there is no entry for given tickerSymbol and marketDate
-//		String sql = "SELECT * FROM STOCK_QUOTES WHERE STOCK_SYMBOL = " + tickerSymbol + " AND MARKET_DATE = " + marketDate + "\";";
-//		String sql = "SELECT * FROM STOCK_QUOTES;";
-//		System.out.println(jtm.query(sql, new BeanPropertyRowMapper(TraderVO.class));
+		//check for provided ticker and date.  if already in database, then will return false
+		String sql = "SELECT * FROM STOCK_QUOTES WHERE STOCK_SYMBOL=" + "'" + tickerSymbol + "'" + " AND MARKET_DATE="
+				+ "'" + marketDate + "'";
+		List<TraderVO> resultCheck = jtm.query(sql, new BeanPropertyRowMapper(TraderVO.class));
+		if(!resultCheck.isEmpty()) {
+			return new ResponseEntity<>("message: ticker and date provided are already present", HttpStatus.OK);
+		} 
+		
 		int result = jtm.update("INSERT INTO STOCK_QUOTES (STOCK_SYMBOL, MARKET_DATE, OPEN, HIGH, LOW, CLOSE, VOLUME) VALUES (?, ?, ?, ?, ?, ?, ?)"
 					,tickerSymbol, marketDate, open, high, low, close, volume);
-		return result==1;
+		if(result == 1) {
+			return new ResponseEntity<>(null, HttpStatus.CREATED);
+		}
+		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@Override
