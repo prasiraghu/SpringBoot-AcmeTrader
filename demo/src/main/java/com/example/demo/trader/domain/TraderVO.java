@@ -3,10 +3,10 @@ package com.example.demo.trader.domain;
 public class TraderVO {
 	private String stock_symbol;
 	private String market_date;
-	private int open;
-	private int high;
-	private int low;
-	private int close;
+	private float open;
+	private float high;
+	private float low;
+	private float close;
 	private int volume;
 
 	public TraderVO() {
@@ -63,56 +63,56 @@ public class TraderVO {
 	/**
 	 * @return the open
 	 */
-	public int getOpen() {
+	public float getOpen() {
 		return open;
 	}
 
 	/**
 	 * @param open the open to set
 	 */
-	public void setOpen(int open) {
+	public void setOpen(float open) {
 		this.open = open;
 	}
 
 	/**
 	 * @return the high
 	 */
-	public int getHigh() {
+	public float getHigh() {
 		return high;
 	}
 
 	/**
 	 * @param high the high to set
 	 */
-	public void setHigh(int high) {
+	public void setHigh(float high) {
 		this.high = high;
 	}
 
 	/**
 	 * @return the low
 	 */
-	public int getLow() {
+	public float getLow() {
 		return low;
 	}
 
 	/**
 	 * @param low the low to set
 	 */
-	public void setLow(int low) {
+	public void setLow(float low) {
 		this.low = low;
 	}
 
 	/**
 	 * @return the close
 	 */
-	public int getClose() {
+	public float getClose() {
 		return close;
 	}
 
 	/**
 	 * @param close the close to set
 	 */
-	public void setClose(int close) {
+	public void setClose(float close) {
 		this.close = close;
 	}
 

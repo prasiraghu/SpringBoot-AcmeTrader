@@ -13,4 +13,8 @@ public interface TraderService {
 
 	public List<TraderVO> findByBoth(String tickerSymbol, String marketDate);
 
+	public boolean postTickerAndMarketDt(String tickerSymbol, String marketDate, float open,
+			float high, float low, float close, int volume);
+	
+	public void deleteTickerAndMarketDt(String tickerSymbol, String marketDate);
 }
