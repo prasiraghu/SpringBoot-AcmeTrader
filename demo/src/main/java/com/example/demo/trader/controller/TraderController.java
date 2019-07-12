@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.admin.domain.AdminAccountVO;
+import com.example.demo.admin.service.AdminAccount;
 import com.example.demo.trader.domain.TraderVO;
 import com.example.demo.trader.service.TraderService;
 
@@ -20,6 +23,9 @@ public class TraderController {
 
 	@Autowired
 	private TraderService traderService;
+
+	@Autowired
+	private AdminAccount adminAccount;
 
 	@RequestMapping("/findstockquotes")
 	public List<TraderVO> findTicker(@RequestParam(required = false) String ticker,
@@ -58,6 +64,12 @@ public class TraderController {
 	public ResponseEntity<?> deleteTickerAndMarketDate(@RequestBody TraderVO traderVO) {
 		return traderService.deleteTickerAndMarketDt(traderVO.getStock_symbol().toUpperCase(),
 				traderVO.getMarket_date());
+	}
+
+	@RequestMapping(value = "/account", method = { RequestMethod.GET })
+	public List<AdminAccountVO> searchAcct(@RequestParam(required = false) String acctNumber,
+			@RequestParam(required = false) String Name) {
+		return adminAccount.search(acctNumber);
 	}
 
 }
