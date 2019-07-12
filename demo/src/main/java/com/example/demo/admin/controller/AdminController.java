@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.admin.domain.AdminAccountVO;
@@ -24,5 +25,11 @@ public class AdminController {
 	@RequestMapping(value = "/account/create", method = { RequestMethod.POST })
 	public List<AdminAccountVO> createAcct(@RequestBody AdminAccountVO adminAccountVO) {
 		return adminAccount.saveAll(adminAccountVO);
+	}
+
+	@RequestMapping(value = "/account/search", method = { RequestMethod.GET })
+	public List<AdminAccountVO> searchAcct(@RequestParam(required = false) String acctNumber,
+			@RequestParam(required = false) String Name) {
+		return adminAccount.search(acctNumber);
 	}
 }
