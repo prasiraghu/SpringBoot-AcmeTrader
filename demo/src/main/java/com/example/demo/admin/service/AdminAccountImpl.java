@@ -18,9 +18,15 @@ public class AdminAccountImpl implements AdminAccount {
 	@Override
 	public List<AdminAccountVO> saveAll(Object adminAccountVO) {
 		AdminAccountVO vo = (AdminAccountVO) adminAccountVO;
-		jtm.execute("INSERT INTO ACCOUNT (FIRSTNAME, LASTNAME, EMAIL, PHONENUMBER, ACCOUNTNUMBER, TRADERID)"
-				+ "VALUES (" + "'" + vo.getFirstName() + "'" + ","
-				+ "'Maldonado', 'alex.maldonado22@yahoo.com', '2147935760','123456789','12345')");
+		long acctNumber = (long) Math.floor(Math.random() * 9_000_000_000L) + 1_000_000_000L;
+		long traderId = (long) Math.floor(Math.random() * 4_000_0L) + 1_00_0L;
+		vo.setAccountNumber(Long.toString(acctNumber));
+		vo.setTraderId(Long.toString(traderId));
+		jtm.update(
+				"INSERT INTO ACCOUNT (FIRSTNAME, LASTNAME, EMAIL, PHONENUMBER, ACCOUNTNUMBER, TRADERID)"
+						+ "VALUES (?, ?, ?, ?, ?, ?)",
+				vo.getFirstName(), vo.getLastName(), vo.getEmail(), vo.getPhoneNumber(), vo.getAccountNumber(),
+				vo.getTraderId());
 		List<AdminAccountVO> all = jtm.query("SELECT *FROM ACCOUNT", new BeanPropertyRowMapper(AdminAccountVO.class));
 		return all;
 	}
